@@ -1,7 +1,7 @@
 #project specific
-.jpg
-.mp4
-.mov
+*.jpg
+*.mp4
+*.mov
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
