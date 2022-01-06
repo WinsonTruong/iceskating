@@ -17,3 +17,7 @@ df4: needs a lot of cleaning
 df5-9 are just df4 but aggregated
 
 df10: component scores
+
+
+df3.drop(columns
+
