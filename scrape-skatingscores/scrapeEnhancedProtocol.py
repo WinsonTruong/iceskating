@@ -81,7 +81,16 @@ class scrapeEvent:
 
     def get_technical_score(self):
         """
-        Aggregates all technical scores by skater
+        Aggregates all technical scores by skater, skates are denoted
+
+        Source: [Wikipedia](https://en.wikipedia.org/wiki/ISU_Judging_System)
+        - `*`: element exceeds allotted amount, receives GOE of 0
+        - `+REP`: denotes a solo jump that has been performed twice, receiving 70% base value
+        - `x`: denotes a 10% bonus halfway after the program
+        - `!`: unclear takeoff edge with deduction of [-1,-2] on GOE
+        - `e`:incorrect takeoff edge (i.e Lutz with inside edge)
+        - `<`: denote under-rotation beginning on ice with [-1/4, -1/2] rotation happening before the jump
+        - `<<`: denote under-rotation beginning on ice greater than -1/2 rotation happening before the jump; jump is downgraded one jump
         """
         start = self.start
         stop = self.stop
