@@ -5,11 +5,16 @@ import requests
 from bs4 import BeautifulSoup
 import time
 
+from technical import *
+
+import warnings
+warnings.filterwarnings("ignore")
+
 class scrapeEvent:
     """
     Class for scraping the "Enhanced Protocol" scoresheet from skatingscores.com, initates by recording all skaders
     """
-    def __init__(self, website, event_name):
+    def __init__(self, website, event_name, long = True):
 
         self.event_name = event_name
         self.dfs = pd.read_html(website)
@@ -23,9 +28,12 @@ class scrapeEvent:
         stop = self.stop
 
         all_skaters = []
+
+        
+        self.program_len = 11 if long else 6 #long program = 12 elements, short = 7
         while start <= stop:
             left = start
-            start += 11
+            start += self.program_len
             right = start
 
             #bio is located in first dataframe in sets of 11
@@ -52,7 +60,7 @@ class scrapeEvent:
 
         while start <= stop:
             left = start
-            start += 11
+            start += self.program_len
             right = start
 
             #bio is located in TENTH dataframe in sets of 11
@@ -98,12 +106,13 @@ class scrapeEvent:
         all_technical = []
         skater_count = 0
 
+
         while start <= stop:
             left = start
-            start += 11
+            start += self.program_len # long program
             right = start
         
-         #bio is located in THIRD dataframe in sets of 11
+         #bio is located in THIRD dataframe in sets of self.program_len
             raw_technical = self.dfs[left:right][3].iloc[:, 1:] 
             raw_technical = raw_technical.dropna(axis = 1)
             raw_technical.columns = raw_technical.iloc[0,:] #use 1st row as column
@@ -111,6 +120,8 @@ class scrapeEvent:
 
             technical.insert(0, 'Name', self.all_skaters['Name'][skater_count])
             technical.insert(1, 'Country', self.all_skaters['Country'][skater_count])
+            technical['Event'] = self.event_name
+            technical = deepen_technical(technical)
             skater_count += 1     
 
             all_technical.append(technical)
@@ -119,5 +130,4 @@ class scrapeEvent:
         for i in all_technical.columns[3:]:
             all_technical[i] = all_technical[i].astype(float, errors = 'ignore')
 
-        all_technical['Event'] = self.event_name
         self.all_technical = all_technical
