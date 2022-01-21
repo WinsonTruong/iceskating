@@ -1,7 +1,7 @@
 import pandas as pd 
 
 def deepen_technical(df):
-    include = ['Name', 'Country', 'Element', 'BaseValue', 'GOETotal', 'Event']
+    include = ['Name', 'Country', 'Element', 'Event', 'BaseValue'] #excluded: ', 'GOETotal'
     columns_to_fix = []
     for i in df.columns:
         if i in include:
