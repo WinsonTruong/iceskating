@@ -121,7 +121,7 @@ class scrapeEvent:
             technical.insert(0, 'Name', self.all_skaters['Name'][skater_count])
             technical.insert(1, 'Country', self.all_skaters['Country'][skater_count])
             technical['Event'] = self.event_name
-            technical = deepen_technical(technical)
+            #technical = deepen_technical(technical)
             skater_count += 1     
 
             all_technical.append(technical)
